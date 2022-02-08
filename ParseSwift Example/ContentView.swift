@@ -16,6 +16,7 @@ struct ContentView: View {
 
     //: A LiveQuery subscription can be used as a view model in SwiftUI
     @ObservedObject var subscription = query.subscribe!
+    @Environment(\.scenePhase) var scenePhase
 
     var body: some View {
         VStack {
@@ -57,8 +58,19 @@ struct ContentView: View {
                     .cornerRadius(20.0)
             })
             Spacer()
+                .onChange(of: scenePhase, perform: { newPhase in
+                    if newPhase == .background {
+                        print("in background")
+                    } else {
+                        query.subscribe!
+                     //   print(test?.results)
+                    }
+                    
+                
+                })
                 
                 
+            
         }
     }
 }
